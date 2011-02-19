@@ -7,9 +7,4 @@ class GroupingSelection extends AbstractSelection {
   GroupingSelection(String _propertyName) {
     super(_propertyName)
   }
-  
-  Projection toProjection(options) {
-    Projections.groupProperty(property)
-  }
-  
 }
