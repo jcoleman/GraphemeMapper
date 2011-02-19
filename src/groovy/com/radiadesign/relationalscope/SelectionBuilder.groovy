@@ -16,10 +16,6 @@ class SelectionBuilder {
     _addSelection_( new PropertySelection(propertyName) )
   }
   
-  def id() {
-    _addSelection_( new IdentifierSelection() )
-  }
-  
   def max(String propertyName) {
     _addSelection_( new MaximumSelection(propertyName) )
   }
@@ -30,10 +26,6 @@ class SelectionBuilder {
   
   def sum(String propertyName) {
     _addSelection_( new SummationSelection(propertyName) )
-  }
-
-  def groupBy(String propertyName) {
-    _addSelection_( new GroupingSelection(propertyName) )
   }
   
   def average(String propertyName) {
