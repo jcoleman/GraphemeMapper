@@ -31,7 +31,7 @@ class DepthFirstAdapter {
     
   }
   
-  def adapt(RelationalScope currentScope) {
+  def adaptEachScopeChild(RelationalScope currentScope) {
     def scopes = currentScope.scopes
     int len = scopes.size()
     for (int i = 0; i < len; ++i) {
@@ -41,12 +41,16 @@ class DepthFirstAdapter {
     }
   }
   
+  def adapt(RelationalScope currentScope) {
+    adaptEachScopeChild(currentScope)
+  }
+  
   def adapt(OrRelationalScope currentScope) {
-    adapt((RelationalScope) currentScope)
+    adaptEachScopeChild(currentScope)
   }
   
   def adapt(NotRelationalScope currentScope) {
-    adapt((RelationalScope) currentScope)
+    adaptEachScopeChild(currentScope)
   }
   
   
