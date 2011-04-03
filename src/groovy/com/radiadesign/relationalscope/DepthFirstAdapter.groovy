@@ -19,7 +19,7 @@ class DepthFirstAdapter {
   // --------------------------------------------------------------------------
   
   def execute() {
-    adapt(this.scope)
+    adapt(this.scope, null)
   }
   
   
@@ -27,30 +27,35 @@ class DepthFirstAdapter {
   // RelationScope Class Adapter Methods
   // --------------------------------------------------------------------------
   
-  def beforeAdaptingScopeChild(int index, scopeOrComparison) {
+  def beforeAdaptingScopeChild(int index, scopeOrComparison, parent) {
     
   }
   
-  def adaptEachScopeChild(RelationalScope currentScope) {
+  def afterAdaptingScopeChild(int index, scopeOrComparison, parent) {
+    
+  }
+  
+  def adaptEachScopeChild(RelationalScope currentScope, parent) {
     def scopes = currentScope.scopes
     int len = scopes.size()
     for (int i = 0; i < len; ++i) {
       def scopeOrComparison = scopes[i]
-      beforeAdaptingScopeChild(i, scopeOrComparison)
-      adapt(scopeOrComparison)
+      beforeAdaptingScopeChild(i, scopeOrComparison, currentScope)
+      adapt(scopeOrComparison, currentScope)
+      afterAdaptingScopeChild(i, scopeOrComparison, currentScope)
     }
   }
   
-  def adapt(RelationalScope currentScope) {
-    adaptEachScopeChild(currentScope)
+  def adapt(RelationalScope currentScope, parent) {
+    adaptEachScopeChild(currentScope, parent)
   }
   
-  def adapt(OrRelationalScope currentScope) {
-    adaptEachScopeChild(currentScope)
+  def adapt(OrRelationalScope currentScope, parent) {
+    adaptEachScopeChild(currentScope, parent)
   }
   
-  def adapt(NotRelationalScope currentScope) {
-    adaptEachScopeChild(currentScope)
+  def adapt(NotRelationalScope currentScope, parent) {
+    adaptEachScopeChild(currentScope, parent)
   }
   
   
@@ -62,65 +67,65 @@ class DepthFirstAdapter {
     
   }
   
-  def adapt(ComparisonBase currentComparison) {
-    adapt(currentComparison.lhsValue)
+  def adapt(ComparisonBase currentComparison, parent) {
+    adapt(currentComparison.lhsValue, currentComparison)
     betweenComparisonValues(currentComparison, currentComparison.lhsValue, currentComparison.rhsValue)
-    adapt(currentComparison.rhsValue)
+    adapt(currentComparison.rhsValue, currentComparison)
   }
   
-  def adapt(BetweenComparison currentComparison) {
-    adapt((ComparisonBase) currentComparison)
+  def adapt(BetweenComparison currentComparison, parent) {
+    adapt((ComparisonBase) currentComparison, parent)
   }
   
-  def adapt(EqualsComparison currentComparison) {
-    adapt((ComparisonBase) currentComparison)
+  def adapt(EqualsComparison currentComparison, parent) {
+    adapt((ComparisonBase) currentComparison, parent)
   }
   
-  def adapt(ExistsComparison currentComparison) {
-    adapt(currentComparison.scope)
+  def adapt(ExistsComparison currentComparison, parent) {
+    adapt(currentComparison.scope, parent)
   }
   
-  def adapt(GreaterThanComparison currentComparison) {
-    adapt((ComparisonBase) currentComparison)
+  def adapt(GreaterThanComparison currentComparison, parent) {
+    adapt((ComparisonBase) currentComparison, parent)
   }
   
-  def adapt(GreaterThanOrEqualsComparison currentComparison) {
-    adapt((ComparisonBase) currentComparison)
+  def adapt(GreaterThanOrEqualsComparison currentComparison, parent) {
+    adapt((ComparisonBase) currentComparison, parent)
   }
   
-  def adapt(ILikeComparison currentComparison) {
-    adapt((ComparisonBase) currentComparison)
+  def adapt(ILikeComparison currentComparison, parent) {
+    adapt((ComparisonBase) currentComparison, parent)
   }
   
-  def adapt(IncludesComparison currentComparison) {
-    adapt((ComparisonBase) currentComparison)
+  def adapt(IncludesComparison currentComparison, parent) {
+    adapt((ComparisonBase) currentComparison, parent)
   }
   
-  def adapt(InComparison currentComparison) {
-    adapt((ComparisonBase) currentComparison)
+  def adapt(InComparison currentComparison, parent) {
+    adapt((ComparisonBase) currentComparison, parent)
   }
   
-  def adapt(IsComparison currentComparison) {
-    adapt((ComparisonBase) currentComparison)
+  def adapt(IsComparison currentComparison, parent) {
+    adapt((ComparisonBase) currentComparison, parent)
   }
   
-  def adapt(LessThanComparison currentComparison) {
-    adapt((ComparisonBase) currentComparison)
+  def adapt(LessThanComparison currentComparison, parent) {
+    adapt((ComparisonBase) currentComparison, parent)
   }
   
-  def adapt(LessThanOrEqualsComparison currentComparison) {
-    adapt((ComparisonBase) currentComparison)
+  def adapt(LessThanOrEqualsComparison currentComparison, parent) {
+    adapt((ComparisonBase) currentComparison, parent)
   }
   
-  def adapt(LikeComparison currentComparison) {
-    adapt((ComparisonBase) currentComparison)
+  def adapt(LikeComparison currentComparison, parent) {
+    adapt((ComparisonBase) currentComparison, parent)
   }
   
-  def adapt(NotEqualsComparison currentComparison) {
-    adapt((ComparisonBase) currentComparison)
+  def adapt(NotEqualsComparison currentComparison, parent) {
+    adapt((ComparisonBase) currentComparison, parent)
   }
   
-  def adapt(PropertyMappingComparison currentComparison) {
+  def adapt(PropertyMappingComparison currentComparison, parent) {
     // TODO: Implement quasi-comparison logic here
     //       -- this is state-mutating adding a mapping to the stack
   }
@@ -130,23 +135,23 @@ class DepthFirstAdapter {
   // Expression Class Adapter Methods
   // --------------------------------------------------------------------------
   
-  def adapt(ExpressionBase currentExpression) {
+  def adapt(ExpressionBase currentExpression, parent) {
     
   }
   
-  def adapt(AbstractPropertyExpression currentExpression) {
+  def adapt(AbstractPropertyExpression currentExpression, parent) {
     
   }
   
-  def adapt(LocalPropertyExpression currentExpression) {
+  def adapt(LocalPropertyExpression currentExpression, parent) {
     
   }
   
-  def adapt(MappedPropertyExpression currentExpression) {
+  def adapt(MappedPropertyExpression currentExpression, parent) {
     
   }
   
-  def adapt(ValueExpression currentExpression) {
+  def adapt(ValueExpression currentExpression, parent) {
     
   }
   
@@ -155,35 +160,35 @@ class DepthFirstAdapter {
   // Selection Class Adapter Methods
   // --------------------------------------------------------------------------
   
-  def adapt(AbstractSelection currentSelection) {
+  def adapt(AbstractSelection currentSelection, parent) {
     
   }
   
-  def adapt(AverageSelection currentSelection) {
+  def adapt(AverageSelection currentSelection, parent) {
     
   }
   
-  def adapt(CountSelection currentSelection) {
+  def adapt(CountSelection currentSelection, parent) {
     
   }
   
-  def adapt(DistinctSelection currentSelection) {
+  def adapt(DistinctSelection currentSelection, parent) {
     
   }
   
-  def adapt(MaximumSelection currentSelection) {
+  def adapt(MaximumSelection currentSelection, parent) {
     
   }
   
-  def adapt(MinimumSelection currentSelection) {
+  def adapt(MinimumSelection currentSelection, parent) {
     
   }
   
-  def adapt(PropertySelection currentSelection) {
+  def adapt(PropertySelection currentSelection, parent) {
     
   }
   
-  def adapt(SummationSelection currentSelection) {
+  def adapt(SummationSelection currentSelection, parent) {
     
   }
   
